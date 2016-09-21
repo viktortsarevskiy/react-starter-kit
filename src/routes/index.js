@@ -20,7 +20,7 @@ import error from './error';
 
 export default {
 
-  path: '/',
+  path: '/:lang',
 
   // keep in mind, routes are evaluated in order
   children: [
@@ -34,11 +34,11 @@ export default {
     error,
   ],
 
-  async action({ next, render, context }) {
+  async action({ params, next, render, context }) {
     const component = await next();
     if (component === undefined) return component;
     return render(
-      <App context={context}>{component}</App>
+      <App context={context} lang={params.lang}>{component}</App>
     );
   },
 

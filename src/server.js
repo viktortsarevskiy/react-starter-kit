@@ -64,6 +64,7 @@ app.use(requestLanguage({
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.enable('strict routing');
 
 //
 // Authentication
@@ -101,7 +102,15 @@ app.use('/graphql', expressGraphQL(req => ({
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('*', async (req, res, next) => {
+app.get('/', async (req, res) => {
+  res.redirect(`/${req.language}/`);
+});
+
+app.get(['/:locale/', '/:locale/*'], async (req, res, next) => {
+  if(locales.indexOf(req.params.locale) === -1) {
+    return res.redirect(`/${req.language}${req.url}`);
+  }
+
   const history = createHistory(req.url);
   // let currentLocation = history.getCurrentLocation();
   let sent = false;
@@ -131,7 +140,7 @@ app.get('*', async (req, res, next) => {
     }));
     let css = new Set();
     let statusCode = 200;
-    const locale = req.language;
+    const locale = req.params.locale || req.language;
     const data = {
       lang: locale,
       title: '',

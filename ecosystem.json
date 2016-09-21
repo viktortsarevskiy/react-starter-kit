@@ -1,0 +1,15 @@
+//TODO update script
+//{
+//  "name": "",
+//  "script": "index.js",
+//  "env": {
+//  	"NODE_ENV": "development",
+//  	"NODE_PORT": 3000,
+//  	"NODE_PATH": process.env.PWD + ':' + process.env.PWD + '/app:' + process.env.PWD + '/app/components'
+//  },
+//  "env_production": {
+//    "NODE_ENV": "production"
+//  },
+//  "watch": true,
+//  "ignore_watch": ["node_modules", "public/assets", ".git"]
+//}

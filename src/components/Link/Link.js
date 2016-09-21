@@ -53,7 +53,7 @@ class Link extends Component {
 
     if (allowTransition) {
       if (this.props.to) {
-        this.props.navigate(this.props.to);
+        this.props.navigate(`/${this.props.currentLocale}${this.props.to}`);
       } else {
         this.props.navigate({
           pathname: event.currentTarget.pathname,
@@ -67,11 +67,13 @@ class Link extends Component {
     const {
       to,
       navigate, // eslint-disable-line no-unused-vars, no-shadow
+      currentLocale, // eslint-disable-line no-unused-vars, no-shadow
       children,
       ...props,
     } = this.props;
+    const href = this.context.createHref(`/${currentLocale}${to}`);
     return (
-      <a href={this.context.createHref(to)} {...props} onClick={this.handleClick}>
+      <a href={href} {...props} onClick={this.handleClick}>
         {children}
       </a>
     );
@@ -79,7 +81,9 @@ class Link extends Component {
 
 }
 
-const mapState = null;
+const mapState = state => ({
+  currentLocale: state.intl.locale,
+});
 
 const mapDispatch = {
   navigate,
